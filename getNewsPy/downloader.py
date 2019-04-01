@@ -1,22 +1,15 @@
-"""import urllib2
-
-url ='http://www.oldbaileyonline.org/browse.jsp?id=t17800628-33&div=t17800628-33'
-
-response =urllib2.urlopen(url)
-webContent = response.read()
-
-print(webContent[0:100])"""
-
 from lxml import html
 import requests
 
-page = requests.get('https://www.haberturk.com/')
-tree = html.fromstring(page.content)
+# Gets web page source
+pageSource = requests.get('https://www.haberturk.com/')
 
-#This will create a list of buyers:
-titles = tree.xpath('//span[@class="title"]/text()')
-#This will create a list of prices
-#prices = tree.xpath('//span[@class="item-price"]/text()')
+# Gets page content from page source as html
+pageContent = html.fromstring(pageSource.content)
 
+# This will create a list of titles
+# TODO: add some logic that remove extra special characters from titles
+titles = pageContent.xpath('//span[@class="title"]/text()')
+
+# Prints all titles in web page
 print 'titles: ', titles
-#print 'Prices: ', prices
